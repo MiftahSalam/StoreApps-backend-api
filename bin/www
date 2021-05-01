@@ -13,7 +13,7 @@ var http = require('http');
  */
 
 var dev = process.env.NODE_ENV !== 'production'
-var port = dev ? 3000 : normalizePort(process.env.PORT);
+var port = dev ? 5000 : normalizePort(process.env.PORT);
 app.set('port', port);
 
 /**
@@ -87,5 +87,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }

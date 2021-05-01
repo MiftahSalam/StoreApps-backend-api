@@ -1,5 +1,7 @@
 const service = require('../prisma/User')
 
+module.exports = authorize1
+
 function authenticate(req, res, next) {
     // console.log("util authenticate -> auth header", req.headers.authorization.split(' '))
     // console.log("util authenticate -> req params", req.params)
@@ -50,21 +52,21 @@ function authorize(roles = []) {
     ]
 }
 
-function authorize1(roles = []) {
+function authorize1(options) {
     console.log("util authoroze1")
     
-    if (typeof roles === "number") {
-        roles = [roles]
+    if (typeof options.roles === "number") {
+        options.roles = [options.roles]
     }
 
     return (req, res, next) => {
-        // console.log("util authorize role validation -> req.user", req.user)
-        if (roles.length && !roles.includes(req.user.roleId)) {
+        console.log("util authorize role validation -> req.user", req.user)
+        console.log("util authoroze1",options.roles)
+        if (!options.roles.length || !options.roles.includes(req.user.roleId)) {
+            console.log("util authorize1 role validation failed")
             return res.status(401).json({ message: "Unauthorized" })
         }
         console.log("util authorize1 role validation success")
         next()
     }
 }
-
-module.exports = authorize1
